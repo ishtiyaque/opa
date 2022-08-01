@@ -98,6 +98,7 @@ type eval struct {
 }
 
 func (e *eval) Run(iter evalIterator) error {
+	fmt.Println("topdown/eval.go: Run called");
 	e.traceEnter(e.query)
 	return e.eval(func(e *eval) error {
 		e.traceExit(e.query)
@@ -291,6 +292,7 @@ func (e *eval) traceEvent(op Op, x ast.Node, msg string, target *ast.Ref) {
 }
 
 func (e *eval) eval(iter evalIterator) error {
+	fmt.Println("eval called");
 	return e.evalExpr(iter)
 }
 

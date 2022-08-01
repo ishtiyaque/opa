@@ -6,6 +6,7 @@ import (
 	"io"
 	"sort"
 	"time"
+	"fmt"
 
 	"github.com/open-policy-agent/opa/ast"
 	"github.com/open-policy-agent/opa/metrics"
@@ -426,6 +427,7 @@ func (q *Query) Run(ctx context.Context) (QueryResultSet, error) {
 // Iter executes the query and invokes the iter function with query results
 // produced by evaluating the query.
 func (q *Query) Iter(ctx context.Context, iter func(QueryResult) error) error {
+	fmt.Println("Inside iter");
 	if q.seed == nil {
 		q.seed = rand.Reader
 	}

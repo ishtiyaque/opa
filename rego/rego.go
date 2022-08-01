@@ -1903,13 +1903,17 @@ func (r *Rego) eval(ctx context.Context, ectx *EvalContext) (ResultSet, error) {
 		WithMetrics(ectx.metrics).
 		WithInstrumentation(ectx.instrumentation).
 		WithRuntime(r.runtime).
-		WithIndexing(ectx.indexing).
+		// WithIndexing(ectx.indexing).
+		WithIndexing(false).
 		WithEarlyExit(ectx.earlyExit).
 		WithInterQueryBuiltinCache(ectx.interQueryBuiltinCache).
 		WithStrictBuiltinErrors(r.strictBuiltinErrors).
 		WithSeed(ectx.seed).
 		WithPrintHook(ectx.printHook).
 		WithDistributedTracingOpts(r.distributedTacingOpts)
+
+	fmt.Println("Indexing ")
+	fmt.Println(ectx.indexing)
 
 	if !ectx.time.IsZero() {
 		q = q.WithTime(ectx.time)
@@ -1938,6 +1942,7 @@ func (r *Rego) eval(ctx context.Context, ectx *EvalContext) (ResultSet, error) {
 
 	var rs ResultSet
 	err := q.Iter(ctx, func(qr topdown.QueryResult) error {
+		fmt.Println(qr)
 		result, err := r.generateResult(qr, ectx)
 		if err != nil {
 			return err
